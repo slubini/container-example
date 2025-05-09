@@ -1,4 +1,4 @@
-FROM busybox:latest
+FROM alpine:latest
 ENV PORT=8000
 
 ADD index.html /www/index.html
