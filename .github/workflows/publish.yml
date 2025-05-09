@@ -40,7 +40,7 @@ jobs:
 
       - name: Build Docker image for {{ matrix.architecture }}
         run: |
-          docker buildx build --pull --platform "{{ matrix.platform }}" --build-arg "BUILD_FROM={{ matrix.image }}" --tag "${{ secrets.DOCKERHUB_USERNAME }}/my-image:{{ matrix.architecture }}" .
+          docker buildx build --pull --platform={{ matrix.platform }} --build-arg BUILD_FROM={{ matrix.image }} --tag ${{ secrets.DOCKERHUB_USERNAME }}/my-image:{{ matrix.architecture }} .
 
       - name: Push Docker image for {{ matrix.architecture }}
         run: |
