@@ -41,8 +41,9 @@ jobs:
       - name: Build and push Docker image for {{ matrix.architecture }}
         run: |
           docker buildx build \
-            --platform ${{ matrix.platform }} \
-            --build-arg BUILD_FROM=${{ matrix.image }} \
-            -t ${{ secrets.DOCKER_USERNAME }}/my-image:${{ matrix.architecture }} \
+            --platform "${{ matrix.platform }}"" \
+            --build-arg "BUILD_FROM=${{ matrix.image }}"" \
+            --tag "${{ secrets.DOCKER_USERNAME }}/my-image:${{ matrix.architecture }}"" \
+            --pull \
+            --push \
             .
-          docker push ${{ secrets.DOCKER_USERNAME }}/my-image:${{ matrix.architecture }}
