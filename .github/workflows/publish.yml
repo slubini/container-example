@@ -13,6 +13,18 @@ jobs:
           - architecture: aarch64
             image: ghcr.io/home-assistant/aarch64-base:3.15
             platform: linux/arm64
+          - architecture: amd64
+            image: ghcr.io/home-assistant/amd64-base:3.15
+            platform: linux/amd64
+          - architecture: armhf
+            image: ghcr.io/home-assistant/armhf-base:3.15
+            platform: linux/arm/v6
+          - architecture: armv7
+            image: ghcr.io/home-assistant/armv7-base:3.15
+            platform: linux/arm/v7
+          - architecture: i386
+            image: ghcr.io/home-assistant/i386-base:3.15
+            platform: linux/386
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -26,10 +38,11 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
-      - name: Build Docker image for {{ matrix.architecture }}
+      - name: Build and push Docker image for {{ matrix.architecture }}
         run: |
-          docker buildx build --pull --platform='linux/arm64' --build-arg 'BUILD_FROM={{ matrix.image }}' --tag '${{ secrets.DOCKERHUB_USERNAME }}/my-image:{{ matrix.architecture }}' --file 'Dockerfile' .
-
-      - name: Push Docker image for {{ matrix.architecture }}
-        run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-image:{{ matrix.architecture }}
+          docker buildx build \
+            --platform ${{ matrix.platform }} \
+            --build-arg BUILD_FROM=${{ matrix.image }} \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/my-image:${{ matrix.architecture }} \
+            .
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-image:${{ matrix.architecture }}
