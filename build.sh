@@ -1,0 +1,1 @@
+docker buildx build --platform=linux/arm64 --build-arg BUILD_FROM=arm64v8/alpine:3.15 -t hello-world:aarch64 .

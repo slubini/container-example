@@ -11,19 +11,19 @@ jobs:
       matrix:
         include:
           - architecture: aarch64
-            image: ghcr.io/home-assistant/aarch64-base:3.15
+            image: arm64v8/alpine:3.15
             platform: linux/arm64
           - architecture: amd64
-            image: ghcr.io/home-assistant/amd64-base:3.15
+            image: alpine:3.15
             platform: linux/amd64
           - architecture: armhf
-            image: ghcr.io/home-assistant/armhf-base:3.15
+            image: arm32v6/alpine:3.15
             platform: linux/arm/v6
           - architecture: armv7
-            image: ghcr.io/home-assistant/armv7-base:3.15
+            image: arm32v7/alpine:3.15
             platform: linux/arm/v7
           - architecture: i386
-            image: ghcr.io/home-assistant/i386-base:3.15
+            image: i386/alpine:3.15
             platform: linux/386
     steps:
       - name: Checkout code
